@@ -2,9 +2,8 @@
 
 # [Abyss](https://aumgupta.github.io/abyss-jellyfin/) for Jellyfin
 
-![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge&color=1a1a1a)
+![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge)
 ![GitHub Release](https://img.shields.io/github/v/release/AumGupta/abyss-jellyfin?style=for-the-badge&color=1a1a1a)
-![GitHub repo size](https://img.shields.io/github/repo-size/AumGupta/abyss-jellyfin?style=for-the-badge)
 
 <img alt="Abyss Logo" src="docs/assets/favicon/apple-touch-icon.png" style="width: 72px;">
 
@@ -25,6 +24,35 @@ Paste this single line into **Dashboard > Branding > Custom CSS** and save:
 ```css
 @import url('https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css');
 ```
+
+> [!IMPORTANT]
+> Make sure that you set `My Media` as your "Home screen section 1". If not, go to `Settings > Home > Home screen` and set section 1 to `My Media`.
+> 
+> <details>
+> <summary>Why? and how to override!</summary>
+> 
+> <br>
+> 
+> Abyss hides the card text of the **first home section** (`section0`) to give the My Media row a clean, > cover-only look.
+> 
+> If you'd prefer to keep card text visible, or if you use a different section in position 1, add this > after the `@import` line:
+> ```css
+> /* Show card text in the first home section */
+> .section0 .cardText {
+>     display: unset;
+> }
+> ```
+> 
+> Or if "My Media" is in a different position (e.g. second section), target that instead:
+> ```css
+> /* Hide card text in section1 instead */
+> .section1 .cardText {
+>     display: none;
+> }
+> ```
+> 
+> </details>
+> 
 
 ## Preview
 
