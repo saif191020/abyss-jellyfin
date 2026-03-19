@@ -34,14 +34,27 @@
     /* Corner rounding applied globally */
     --abyss-radius: 12px;
 
+    /* Fixed defaults */
+    
     /* Indicator pill background (episode count, etc.) */
     --abyss-indicator: 55, 55, 55;
+    
+    /* Backgorund for drawers and dialogs */
+    --abyss-glass-tint: 42, 42, 42;
+
+    /* Custom cubic-bezier */
+    --abyss-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --abyss-ease-snappy: cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 
 /* =============================================================================
    3. BASE / GLOBAL
    ============================================================================= */
+
+html {
+    scrollbar-gutter: stable;
+}
 
 body {
     font-family: "Google Sans", sans-serif;
@@ -125,6 +138,41 @@ progress::-webkit-progress-value {
     color: rgba(var(--abyss-accent), 0.75) !important;
 }
 
+/* Override browser default blue focus/selection colour */
+::selection {
+    background: rgba(var(--abyss-accent), 0.25);
+    color: rgb(var(--abyss-accent));
+}
+
+::-moz-selection {
+    background: rgba(var(--abyss-accent), 0.25);
+    color: rgb(var(--abyss-accent));
+}
+
+:focus-visible {
+    outline-color: rgba(var(--abyss-accent), 0.6) !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select:focus,
+.emby-select-withcolor:focus,
+.checkboxOutline:focus {
+    border-color: rgba(var(--abyss-accent), 0.4) !important;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    accent-color: rgb(var(--abyss-accent));
+}
+
+/* Override Chromium/Electron blue accent globally */
+* {
+    accent-color: rgb(var(--abyss-accent));
+}
 
 /* =============================================================================
    4. TYPOGRAPHY
@@ -134,6 +182,7 @@ progress::-webkit-progress-value {
     text-size-adjust: 110%;
     font-size: 110%;
     padding-top: 8px;
+    margin-top: -2em;
     width: fit-content;
     align-self: center !important;
     border-radius: 50px;
@@ -147,13 +196,29 @@ progress::-webkit-progress-value {
 
 .sectionTitle {
     font-weight: 600;
+}
+
+.homeScreenSettingsContainer .sectionTitle,
+#quickConnectPreferencesPage .sectionTitle,
+.settingsContainer .sectionTitle {
+    font-size:xx-large;
+}
+
+.homeSectionsContainer .sectionTitle {
     margin-left: .4em !important;
     margin-top: .2em !important;
     margin-bottom: .2em !important;
+    padding-top: 3.3% !important;
 }
 
 .sectionTitleTextButton > .material-icons {
     margin: 0;
+}
+
+.sectionTitleTextButton:not(.padded-left) {
+    padding: 4px 12px 6px 6px !important;
+    margin-left: -6px !important;
+    border-radius: var(--abyss-radius);
 }
 
 .sectionTitleTextButton > .sectionTitle {
@@ -162,7 +227,16 @@ progress::-webkit-progress-value {
 
 .cardText {
     padding: .06em .5em 0 .06em;
+    font-weight: 200;
+    font-size: medium;
+    opacity: 0.8;
+}
+
+.cardText-first {
+    margin-top: 4px !important;
     font-weight: 600;
+    font-size: larger !important;
+    opacity: 1 !important;
 }
 
 .cardTextCentered,
@@ -178,6 +252,15 @@ progress::-webkit-progress-value {
     color: rgba(var(--abyss-accent), .8);
 }
 
+.dialog {
+    font-weight: 500;
+}
+
+.formDialogHeaderTitle {
+    font-weight: bold !important;
+    margin-left: 0 !important;
+}
+
 
 /* =============================================================================
    5. LAYOUT & STRUCTURE
@@ -185,7 +268,7 @@ progress::-webkit-progress-value {
 
 /* Header */
 .headerTop {
-    padding: .54em 0 0 0;
+    padding: 2em 0 !important;
 }
 
 .skinHeader {
@@ -194,6 +277,10 @@ progress::-webkit-progress-value {
     justify-items: center !important;
     align-self: center !important;
     justify-content: center !important;
+}
+
+.skinHeader.semiTransparent {
+    background-color: transparent;
 }
 
 .skinHeader-withBackground::before {
@@ -210,7 +297,7 @@ progress::-webkit-progress-value {
 
 .headerLeft,
 .headerRight {
-    padding: 0 24px;
+    padding: 0 31px;
 }
 
 .headerUserButtonRound {
@@ -219,7 +306,7 @@ progress::-webkit-progress-value {
 
 /* Main content */
 .backdropImage {
-    filter: blur(23px) saturate(120%) contrast(120%) brightness(40%);
+    filter: blur(23px) saturate(120%) contrast(120%) brightness(25%);
 }
 
 .backgroundContainer.withBackdrop {
@@ -228,9 +315,9 @@ progress::-webkit-progress-value {
 
 /* Navigation / drawer */
 .mainDrawer {
-    background-color: rgba(47, 47, 47, 0.8);
+    background-color: rgba(var(--abyss-glass-tint), 0.69);
     margin: 24px 0;
-    border-radius: 35px;
+    border-radius: 32px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: solid 1px rgba(245, 245, 247, 0.2) !important;
 }
@@ -239,15 +326,26 @@ progress::-webkit-progress-value {
     margin: 24px;
 }
 
+.sidebarHeader {
+    margin: 0.9em 0 0.2em;
+    letter-spacing: 0.02em;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+[dir=ltr] .sidebarHeader {
+    padding-left: 0.8em;
+}
+
 .emby-tabs {
     border-radius: 50px;
 }
 
 .emby-tabs-slider {
     border-radius: 50px;
-    padding: 4px;
+    padding: 5px 2.5px;
     width: fit-content;
-    background-color: rgba(47, 47, 47, 0.8);
+    background-color: rgba(var(--abyss-glass-tint), 0.35);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(87, 87, 87, 0.18);
 }
@@ -255,6 +353,7 @@ progress::-webkit-progress-value {
 .navMenuOptionText {
     margin-top: 0;
     font-weight: 500;
+    font-size: large;
 }
 
 .navMenuOptionIcon,
@@ -262,6 +361,10 @@ progress::-webkit-progress-value {
     background: #cccccf69;
     border-radius: 50px;
     padding: 10px;
+}
+
+[dir=ltr] .navMenuOptionIcon {
+    margin-right: 0.75em;
 }
 
 [dir=ltr] .listItemIcon {
@@ -277,7 +380,7 @@ progress::-webkit-progress-value {
 }
 
 .scrollContainer {
-    padding: 36px 12px;
+    padding: 36px 12px 0 12px;
 }
 
 .navMenuOption-selected,
@@ -289,7 +392,7 @@ progress::-webkit-progress-value {
 .appfooter {
     background: rgba(0, 0, 0, 0.9);
     margin: 24px;
-    border-radius: 18px;
+    border-radius: 24px;
 }
 
 /* Backdrop / detail ribbon */
@@ -359,10 +462,10 @@ progress::-webkit-progress-value {
 .fab,
 a[data-role="button"] {
     background: rgba(40, 40, 40, 0.8) !important;
-    transition: background 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                color 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                border-color 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transition: background 0.37s var(--abyss-ease),
+                color 0.37s var(--abyss-ease),
+                border-color 0.37s var(--abyss-ease),
+                box-shadow 0.37s var(--abyss-ease) !important;
 }
 
 .raised:hover,
@@ -374,6 +477,7 @@ a[data-role="button"]:hover {
 .raised:hover,
 .fab:hover,
 .navMenuOption:hover,
+.listItem:hover,
 .actionSheetMenuItem:hover,
 .css-17c09up:hover {
     background: rgb(var(--abyss-accent)) !important;
@@ -381,8 +485,8 @@ a[data-role="button"]:hover {
     font-weight: 700;
 }
 
-.actionSheetMenuItem:hover {
-    color: #121212;
+.actionSheetMenuItem {
+    border-radius: var(--abyss-radius) !important;
 }
 
 .actionSheetContent {
@@ -412,6 +516,7 @@ a[data-role="button"]:hover {
 
 .emby-tab-button {
     padding: 0.5em 1.5em;
+    margin: 0 2.5px;
     border-radius: 50px;
 }
 
@@ -433,6 +538,14 @@ a[data-role="button"]:hover {
 .detailButton {
     border-radius: 50%;
     max-width: 15vw !important;
+}
+
+.button-submit {
+    position: sticky;
+    bottom: 24px;
+    margin-top:48px !important;
+    box-shadow: 0 0 24px 2px rgba(var(--abyss-accent), 0.2);
+    z-index: 2;
 }
 
 /* Active / played / link states */
@@ -480,9 +593,9 @@ div[data-role="controlgroup"] a[data-role="button"] {
 
 .raised.homeLibraryButton {
     background: rgba(0, 0, 0, 0.3) !important;
-    transition: background 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                border-color 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: background 0.37s var(--abyss-ease),
+                border-color 0.37s var(--abyss-ease),
+                box-shadow 0.37s var(--abyss-ease);
     border: solid 1px rgba(var(--abyss-accent), 0) !important;
 }
 
@@ -495,6 +608,18 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .dialog,
 .toast {
     border-radius: 24px !important;
+}
+
+.iconOsd {
+    right: 24px;
+    top: 8.5%;
+    border-radius: 18px !important;
+}
+.iconOsdIcon {
+    margin: .5em .63em 0 .63em;
+}
+.iconOsdProgressOuter {
+    margin: 1.5em .25em 0.35em;
 }
 
 .formDialogHeader {
@@ -511,10 +636,6 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .formDialogHeader-clear,
 .innerCardFooterClear {
     background-color: transparent !important;
-}
-
-.formDialogHeaderTitle {
-    margin-left: 1em;
 }
 
 .formDialogContent {
@@ -541,9 +662,10 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .cardOverlayContainer {
     border-radius: var(--abyss-radius) !important;
     border: solid 1px rgba(var(--abyss-accent), 0.0) !important;
-    transition: border-color 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transition: border-color 0.15s var(--abyss-ease) !important;
 }
 
+.button-submit,
 .cardOverlayContainer:hover,
 .dialog,
 .toast,
@@ -560,8 +682,10 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .card.show-animation:focus > .cardBox {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-    transition: transform 0.37s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    transition: transform 0.37s var(--abyss-ease) !important;
 }
+
+
 
 /* --- Card Indicators --- */
 
@@ -699,10 +823,8 @@ div[data-role="controlgroup"] a[data-role="button"] {
     margin-bottom: 2px !important;
 }
 
-.listItem:hover {
-    transition: background 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: var(--abyss-radius) !important;
+.listItemBodyText {
+    font-weight: 500;
 }
 
 .listItem-border {
@@ -765,16 +887,32 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .emby-input:focus,
 .emby-textarea:focus,
 .emby-select-withcolor:focus {
-    border-radius: 6px !important;
-    border: none;
+    border: 1px solid rgba(40, 40, 40, 0.8);
+}
+
+.checkboxOutline {
+    border-color: rgba(var(--abyss-accent), 0.3) !important;
+    transition: background 0.2s var(--abyss-ease),
+                border-color 0.2s var(--abyss-ease);
+}
+
+input[type="checkbox"]:checked ~ .checkboxOutline,
+input[type="checkbox"]:checked + .checkboxOutline {
+    background: rgb(var(--abyss-accent)) !important;
+    border-color: rgb(var(--abyss-accent)) !important;
+}
+
+.checkboxIcon {
+    color: #121212 !important;
+}
+
+input[type="checkbox"]:focus ~ .checkboxOutline,
+input[type="checkbox"]:focus + .checkboxOutline {
+    outline: 2px solid rgba(var(--abyss-accent), 0.4) !important;
+    outline-offset: 2px;
 }
 
 /* --- Paper / Table --- */
-
-.paperList,
-.visualCardBox {
-    background-color: rgba(0, 0, 0, 0.5);
-}
 
 .sessionCardFooter {
     border: none;
@@ -802,6 +940,74 @@ div[data-role="controlgroup"] a[data-role="button"] {
     background: linear-gradient(140deg, rgb(var(--abyss-accent)), #111) !important;
 }
 
+.subtitleappearance-preview #sliderVertical {
+    margin: 24px !important;
+}
+
+/* --- Others --- */
+#userProfilePage .readOnlyContent,
+.readOnlyContent .verticalSection,
+#languagePreferencesPage .settingsContainer .verticalSection,
+.subtitleAppearanceSection,
+.homeScreenSettingsContainer .perLibrarySettings,
+.homeScreenSettingsContainer .verticalSection-extrabottompadding {
+    padding: 16px;
+    background-color: rgba(var(--abyss-glass-tint), 0.69);
+    border-radius: 32px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: solid 1px rgba(245, 245, 247, 0.2) !important;
+}
+
+.homeScreenSettingsContainer .verticalSection-extrabottompadding .verticalSection{
+    padding: 0 !important;
+    border-radius: 0;
+    background: none !important;
+    box-shadow: none;
+    border: none !important;
+}
+
+.homeScreenSettingsContainer .perLibrarySettings {
+    margin-bottom: 36px !important;
+}
+
+.homeScreenSettingsContainer .paperList {
+    padding: 12px;
+    background-color: rgba(var(--abyss-glass-tint), 0.69);
+    border-radius: 24px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin: 0 !important;
+}
+
+.readOnlyContent .adminSection {
+    border-radius: 32px 32px 6px 6px !important;
+    margin-bottom: 12px !important;
+}
+
+.readOnlyContent .userSection {
+    border-radius: 6px 6px 32px 32px !important;
+}
+
+.readOnlyContent .userSection .sectionTitle{
+    padding-top: 0 !important;
+}
+
+#userProfilePage .readOnlyContent {
+    padding: 24px !important;
+}
+
+#userProfilePage .readOnlyContent div {
+    align-items: baseline !important;
+    margin-right: 12px !important;
+}
+
+#image, 
+#uploadImage {
+    border-radius: 24px !important;
+}
+
+#quickConnectPreferencesPage {
+    justify-items: center;
+}
 
 /* =============================================================================
    7. ROUNDED CORNERS
@@ -815,10 +1021,11 @@ div[data-role="controlgroup"] a[data-role="button"] {
 .paperList,
 .cardContent,
 .sessionNowPlayingInnerContent,
+.subtitleappearance-preview,
 .listItemImage,
 .listItemImageButton,
 .listItemButton,
-.listItem:hover,
+.listItem,
 .cardImage,
 .fab,
 .raised,
@@ -877,6 +1084,11 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
     border-radius: var(--abyss-radius) var(--abyss-radius) 0 0 !important;
 }
 
+[dir=ltr] .emby-select,
+#inputTextColor,
+.checkboxOutline {
+    border-radius: 8px !important;
+}
 
 /* =============================================================================
    8. MEDIA PLAYER
@@ -900,10 +1112,6 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 
 .osdTitle {
     margin-left: 0.5em;
-}
-
-.videoOsdBottom {
-    padding-top: 1em;
 }
 
 .skinHeader.osdHeader {
@@ -956,15 +1164,15 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
     transform: translate3d(-50%, -108%, 0);
 }
 
-/* Now Playing Bar */
+/* Playing Bar */
 .nowPlayingBarTop {
     margin-top: 24px;
 }
 
+.videoOsdBottom .osdControls,
 .nowPlayingBar {
-    border-radius: 18px;
+    border-radius: 24px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border: solid 1px rgba(245, 245, 247, 0.2) !important;
     padding: 12px;
 }
 
@@ -980,6 +1188,18 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 
 .nowPlayingBarInfoContainer {
     margin-left: 8px;
+}
+
+.videoOsdBottom {
+  padding: 0 !important;
+  margin: 24px !important;
+  border-radius: 24px;
+  background: none !important;
+}
+
+.osdTimeText {
+    margin-left: 0 !important;
+    opacity: 0.5;
 }
 
 /* Track selector */
@@ -1208,13 +1428,14 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
     .withSectionTabs .headerTop { padding-bottom: 0; }
 }
 
-@media all and (min-width: 70em) {
+@media all and (min-width: 75em) {
     .cardOverlayFab-primary { background-color: #00000000; }
     .cardOverlayButtonIcon { background-color: #00000000 !important; }
     .cardOverlayContainer { background-color: rgba(0, 0, 0, 0.7); }
+    .headerTabs.sectionTabs { margin-top: -4.9em !important; }
 }
 
-@media all and (max-width: 70em) {
+@media all and (max-width: 75em) {
     .cardOverlayFab-primary { background-color: #00000000; }
     .cardOverlayButtonIcon { background-color: #00000000 !important; }
     .cardOverlayContainer { background-color: rgba(0, 0, 0, 0.7); }
@@ -1256,18 +1477,23 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 
 /* Backdrop filter support */
 @supports (backdrop-filter: blur(15px)) {
-    .headerTop,
-    .css-fknfom {
-        backdrop-filter: blur(15px);
-    }
 
     .dialog,
+    .iconOsd,
     .mainDrawer,
     .toast,
     .emby-tabs-slider,
+    .videoOsdBottom .osdControls,
+    .readOnlyContent .verticalSection,
+    .button-submit,
     .appfooter {
+        backdrop-filter: blur(15px) !important;
+        background-color: rgba(var(--abyss-glass-tint), 0.69) !important;
+    }
+    
+    .videoOsdBottom,
+    .headerButton {
         backdrop-filter: blur(15px);
-        background-color: rgba(47, 47, 47, 0.35);
     }
 
     .paper-icon-button-light:hover,
@@ -1280,7 +1506,7 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
         backdrop-filter: blur(2px);
     }
 
-    @media all and (max-width: 70em) {
+    @media all and (max-width: 75em) {
         .cardOverlayButtonIcon {
             background-color: rgba(0, 0, 0, 0.35) !important;
             backdrop-filter: blur(4px);
@@ -1303,15 +1529,99 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 
 /* Episode list image sizing */
 .listItemImage.listItemImage-large.itemAction.lazy {
-    transition: filter 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: filter 0.15s var(--abyss-ease);
 }
 
-
 /* =============================================================================
-   14. ANIMATIONS & KEYFRAMES
+   14. SEARCH PAGE
    ============================================================================= */
 
-/* Smooth, refined transitions for UI elements — slow ease-out like macOS */
+.searchSuggestionsList .emby-button {
+    color: rgba(var(--abyss-accent), 0.6);
+    font-weight: 100;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#searchTextInput {
+    font-weight: bold;
+    font-size: 24px;
+    padding: 12px 18px;
+    letter-spacing: 1.1px;
+}
+
+.searchFieldsInner .inputLabel {
+    display: none;
+}
+
+.searchfields-icon {
+    align-self: center !important;
+}
+
+.verticalSection.searchSuggestions .sectionTitle {
+    display: none;
+}
+
+.verticalSection.searchSuggestions {
+    text-align: left !important;
+    padding: 12px 0 0 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: calc(100vh - 190px);
+    overflow: hidden;
+}
+
+.searchSuggestionsList {
+    width: fit-content;
+    min-width: min(908px, calc(100vw - 70px));
+    padding-left: 50px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--abyss-accent), 0.5) transparent;
+}
+
+.searchSuggestionsList::-webkit-scrollbar {
+    width: 4px;
+}
+
+.searchSuggestionsList::-webkit-scrollbar-thumb {
+    background: rgba(var(--abyss-accent), 0.5);
+    border-radius: var(--abyss-radius);
+}
+
+.searchSuggestionsList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#searchPage .scrollSlider {
+    overflow: hidden !important;
+}
+
+.noItemsMessage.centerMessage {
+    font-weight: 100 !important;
+    font-size: 36px;
+    letter-spacing: 1.2px;
+    opacity: 0.8;
+}
+
+.centerMessage {
+    padding: 2em 0 !important;
+}
+
+@media all and (max-width: 50em) {
+    .searchSuggestionsList {
+        min-width: calc(100vw - 80px);
+        padding-left: 44px;
+    }
+}
+
+/* =============================================================================
+   15. ANIMATIONS & KEYFRAMES
+   ============================================================================= */
+
 .cardOverlayContainer,
 .cardOverlayButtonIcon,
 .cardOverlayButton,
@@ -1320,19 +1630,18 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 .emby-tab-button-active,
 .button-flat,
 .navMenuOption,
+.listItem,
 .actionSheetMenuItem {
-    transition: background 0.37s cubic-bezier(0.4, 0.0, 0.2, 1),
-                color 0.37s cubic-bezier(0.4, 0.0, 0.2, 1),
-                border-color 0.37s cubic-bezier(0.4, 0.0, 0.2, 1),
-                opacity 0.37s cubic-bezier(0.4, 0.0, 0.2, 1),
-                box-shadow 0.37s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
-                width: 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-                height: 0.37s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transition: background 0.37s var(--abyss-ease),
+                color 0.37s var(--abyss-ease),
+                border-color 0.37s var(--abyss-ease),
+                opacity 0.37s var(--abyss-ease),
+                box-shadow 0.37s var(--abyss-ease),
+                transform 0.37s var(--abyss-ease) !important;
 }
 
-/* Snappy slide-in/out for the sidebar drawer */
 .mainDrawer {
-    transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                left 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                width 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    transition: transform 0.18s var(--abyss-ease-snappy),
+                left 0.18s var(--abyss-ease-snappy),
+                width 0.18s var(--abyss-ease-snappy) !important;
 }

@@ -59,46 +59,46 @@ Paste this single line into **Dashboard > Branding > Custom CSS** and save:
 ### Home
 <table>
   <tr>
-    <td colspan="2"><img src="docs/assets/images/1.png" style="width:100%;border-radius:8px"/></td>
+    <td colspan="2"><img src="docs/assets/images/1.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
   <tr>
-    <td width="19.5%"><img src="docs/assets/images/2.png" style="width:100%;border-radius:8px"/></td>
-    <td width="71%"><img src="docs/assets/images/3.png" style="width:100%;border-radius:8px"/></td>
+    <td width="19.5%"><img src="docs/assets/images/2.png" style="width:100%;border-radius:8px;"/></td>
+    <td width="71%"><img src="docs/assets/images/3.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
 </table>
 
 ### Cards & UI Details
 <table>
   <tr>
-    <td rowspan="2" width="40%"><img src="docs/assets/images/5.png" style="width:100%;border-radius:8px"/></td>
-    <td><img src="docs/assets/images/6.png" style="width:100%;border-radius:8px"/></td>
+    <td rowspan="2" width="40%"><img src="docs/assets/images/5.png" style="width:100%;border-radius:8px;"/></td>
+    <td><img src="docs/assets/images/6.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
   <tr>
-    <td><img src="docs/assets/images/4.png" style="width:100%;border-radius:8px"/></td>
+    <td><img src="docs/assets/images/4.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
 </table>
 
 ### Libraries
 <table>
   <tr>
-    <td width="50%"><img src="docs/assets/images/shows-2.png" style="width:100%;border-radius:8px"/></td>
-    <td width="50%"><img src="docs/assets/images/details-page.png" style="width:100%;border-radius:8px"/></td>
+    <td width="50%"><img src="docs/assets/images/shows-2.png" style="width:100%;border-radius:8px;"/></td>
+    <td width="50%"><img src="docs/assets/images/details-page.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/assets/images/movies-2.png" style="width:100%;border-radius:8px"/></td>
-    <td width="50%"><img src="docs/assets/images/movies-1.png" style="width:100%;border-radius:8px"/></td>
+    <td width="50%"><img src="docs/assets/images/movies-2.png" style="width:100%;border-radius:8px;"/></td>
+    <td width="50%"><img src="docs/assets/images/movies-1.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
 </table>
 
 ### Music
 <table>
   <tr>
-    <td width="50%"><img src="docs/assets/images/music3.png" style="width:100%;border-radius:8px"/></td>
-    <td width="50%"><img src="docs/assets/images/music4.png" style="width:100%;border-radius:8px"/></td>
+    <td width="50%"><img src="docs/assets/images/music3.png" style="width:100%;border-radius:8px;"/></td>
+    <td width="50%"><img src="docs/assets/images/music4.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
   <tr>
-    <td width="50%"><img src="docs/assets/images/music1.png" style="width:100%;border-radius:8px"/></td>
-    <td width="50%"><img src="docs/assets/images/music2.png" style="width:100%;border-radius:8px"/></td>
+    <td width="50%"><img src="docs/assets/images/music1.png" style="width:100%;border-radius:8px;"/></td>
+    <td width="50%"><img src="docs/assets/images/music2.png" style="width:100%;border-radius:8px;"/></td>
   </tr>
 </table>
 
