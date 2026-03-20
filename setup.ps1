@@ -465,8 +465,8 @@ Invoke-WithTrap {
 
     Write-Host "  What would you like to do?" -ForegroundColor White
     Write-Host ""
-    Write-Host "   [1] Install" -ForegroundColor Green
-    Write-Host "   [2] Uninstall" -ForegroundColor Yellow
+    Write-Host "   [1] Install" -ForegroundColor Green -NoNewline
+    Write-Host "        [2] Uninstall" -ForegroundColor Yellow
     Write-Host ""
     $choice = Read-Host "  Enter 1 or 2"
 

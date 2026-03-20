@@ -22,15 +22,15 @@ jobs:
 
       - name: Cache PS2EXE
         id: cache-ps2exe
-        uses: actions/cache@v4
+        uses: actions/cache@v4.2.2
         with:
           path: C:\Users\runneradmin\Documents\PowerShell\Modules\ps2exe
-          key: ps2exe-module
+          key: ps2exe-module-${{ runner.os }}
 
       - name: Install PS2EXE
         if: steps.cache-ps2exe.outputs.cache-hit != 'true'
         run: Install-Module ps2exe -Force -Scope CurrentUser
-        shell: powershell
+        shell: pwsh
 
       - name: Get version
         id: version
@@ -49,7 +49,7 @@ jobs:
           echo "VERSION=$version" >> $env:GITHUB_OUTPUT
           echo "SHORT_VERSION=$shortVersion" >> $env:GITHUB_OUTPUT
           echo "FILE_NAME=abyss-setup-v$shortVersion.exe" >> $env:GITHUB_OUTPUT
-        shell: powershell
+        shell: pwsh
 
       - name: Build abyss-setup.exe
         run: |
@@ -63,7 +63,7 @@ jobs:
             -Version "${{ steps.version.outputs.VERSION }}" `
             -IconFile ".\docs\assets\favicon\favicon.ico" `
             -NoConsole:$false
-        shell: powershell
+        shell: pwsh
 
       - name: Upload to latest release
         if: github.event_name == 'push'
