@@ -2,16 +2,17 @@
 
 # [Abyss](https://aumgupta.github.io/abyss-jellyfin/) for Jellyfin
 
-![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge)
 ![GitHub Release](https://img.shields.io/github/v/release/AumGupta/abyss-jellyfin?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge)
+![jsDelivr Requests](https://img.shields.io/jsdelivr/gh/hm/AumGupta/abyss-jellyfin?style=for-the-badge&label=Usage&logo=none)
 <!-- ![GitHub Downloads](https://img.shields.io/github/downloads/AumGupta/abyss-jellyfin/total?style=for-the-badge) -->
 
-<img alt="Abyss Logo" src="docs/assets/favicon/apple-touch-icon.png" style="margin-top:16px; width: 72px;">
+<img alt="Abyss Logo" src="docs/assets/favicon/apple-touch-icon.png" style="width: 72px;">
 
 A clean and minimal theme for Jellyfin with frosted glass surfaces, refined typography, smooth animations and a minimal design language that re-skins JellyFin almost exhaustively.
 
 <a href="https://aumgupta.github.io/abyss-jellyfin/">
-  <img src="https://img.shields.io/badge/View%20%26%20Install-→-f5f5f7?style=for-the-badge&labelColor=2f2f2f" alt="Install" width=273.5 style="margin: 24px 0; width: 273.5;" />
+  <img src="https://img.shields.io/badge/View%20%26%20Install-→-f5f5f7?style=for-the-badge&labelColor=2f2f2f" alt="Install" width=273.5 />
 </a>
 </div>
 
@@ -62,6 +63,21 @@ A clean and minimal theme for Jellyfin with frosted glass surfaces, refined typo
 </details>
 
 ---
+
+## Features
+
+- **One-click installer**: `abyss-setup.exe` configures your entire Jellyfin instance, CSS, dashboard theme, home section order, and Spotlight, all automatically. *The theme selector in display settings becomes locked to Dark after installation, which is intentional and expected.*
+- **Spotlight home banner**: a cinematic banner on your home screen showing your current Continue Watching item, complete with backdrop image, metadata pills (rating, runtime, score), and a resume play button.
+- **Frosted glass UI**: header, drawer, dialogs, toasts, and footer all use `backdrop-filter` blur for a layered, depth-rich interface
+- **Refined typography**: *Google Sans* throughout, with consistent weight and spacing
+- **Smooth transitions and animations**: every interaction uses carefully tuned `cubic-bezier` easing. Home sections animate in with a staggered fade-up entrance on load. The favourite (heart) button has a spring pop animation.
+- **Floating sidebar**: pill-shaped drawer with rounded corners and a snappy slide animation
+- **Pill tab bar**: active tab highlighted with a filled pill indicator
+- **Every element targeted**: styling covers cards, indicators, sliders, checkboxes, form inputs, the media player OSD, now playing bar, chapter thumbnails, search page, cast thumbnails (9 responsive breakpoints), login page, detail pages, metadata manager, and the admin dashboard
+- **Responsive**: mobile layout tweaks, ultrawide support, and cast thumbnail scaling across all breakpoints
+- **Customisable**: three CSS variables let you retheme without touching the rest of the file
+
+
 
 ## Installation
 
@@ -185,20 +201,6 @@ Override any of these variables at the top of your **Custom CSS** field, after t
 
 ---
 
-## Features
-
-- **One-click installer**: `abyss-setup.exe` configures your entire Jellyfin instance, CSS, dashboard theme, home section order, and Spotlight, all automatically. *The theme selector in display settings becomes locked to Dark after installation, which is intentional and expected.*
-- **Spotlight home banner**: a cinematic banner on your home screen showing your current Continue Watching item, complete with backdrop image, metadata pills (rating, runtime, score), and a resume play button.
-- **Frosted glass UI**: header, drawer, dialogs, toasts, and footer all use `backdrop-filter` blur for a layered, depth-rich interface
-- **Refined typography**: *Google Sans* throughout, with consistent weight and spacing
-- **Smooth transitions and animations**: every interaction uses carefully tuned `cubic-bezier` easing. Home sections animate in with a staggered fade-up entrance on load. The favourite (heart) button has a spring pop animation.
-- **Floating sidebar**: pill-shaped drawer with rounded corners and a snappy slide animation
-- **Pill tab bar**: active tab highlighted with a filled pill indicator
-- **Every element targeted**: styling covers cards, indicators, sliders, checkboxes, form inputs, the media player OSD, now playing bar, chapter thumbnails, search page, cast thumbnails (9 responsive breakpoints), login page, detail pages, metadata manager, and the admin dashboard
-- **Responsive**: mobile layout tweaks, ultrawide support, and cast thumbnail scaling across all breakpoints
-- **Customisable**: three CSS variables let you retheme without touching the rest of the file
-
-
 ## Compatibility
 
 | Jellyfin version | Status |
@@ -229,7 +231,7 @@ Abyss is licensed under the [MIT License](https://github.com/AumGupta/abyss-jell
 
 ## Credits
 
-- Spotlight home banner concept inspired by [jellyfin-featured-content-bar](https://github.com/loof/jellyfin-featured-content-bar) by loof.
-- Built with inspiration from [Ultrachromic](https://github.com/CTalvio/Ultrachromic) by CTalvio.
 - [Google Sans](https://fonts.google.com/specimen/Google+Sans) by Google, served via Google Fonts.
 - [Material Icons Round](https://fonts.google.com/icons) by Google, served via jsDelivr.
+- Built with inspiration from [Ultrachromic](https://github.com/CTalvio/Ultrachromic) by CTalvio.
+- Spotlight home banner concept inspired by [jellyfin-featured-content-bar](https://github.com/tedhinklater/Jellyfin-Featured-Content-Bar) by tedhinklater.
