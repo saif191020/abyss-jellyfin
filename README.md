@@ -85,6 +85,18 @@ A clean and minimal theme for Jellyfin with frosted glass surfaces, refined typo
 
 ## Installation
 
+### Linux
+
+Download the latest **`abyss-setup-vX.X.X.sh`** from the [Releases](https://github.com/AumGupta/abyss-jellyfin/releases/latest) page and run it:
+
+```bash
+chmod +x abyss-setup-vX.X.X.sh
+sudo ./abyss-setup-vX.X.X.sh
+```
+
+> [!NOTE]
+> Requires `curl` and `python3`, which are available by default on most Linux distributions.
+
 ### Windows
 
 Download the latest **`abyss-setup-vX.X.X.exe`** from the [Releases](https://github.com/AumGupta/abyss-jellyfin/releases/latest) page and run it. The installer will:
@@ -97,17 +109,6 @@ Download the latest **`abyss-setup-vX.X.X.exe`** from the [Releases](https://git
 
 For detailed steps go to the [Setup Guide](SETUP.md).
 
-### Linux
-
-Download the latest **`abyss-setup-vX.X.X.sh`** from the [Releases](https://github.com/AumGupta/abyss-jellyfin/releases/latest) page and run it:
-
-```bash
-chmod +x abyss-setup-vX.X.X.sh
-sudo ./abyss-setup-vX.X.X.sh
-```
-
-> [!NOTE]
-> Requires `curl` and `python3`, which are available by default on most Linux distributions.
 
 ---
 
