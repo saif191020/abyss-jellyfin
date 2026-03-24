@@ -27,7 +27,7 @@ jobs:
             TAG=$(curl -s \
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
               "https://api.github.com/repos/${{ github.repository }}/releases/latest" \
-              | jq -r .tag_name)
+              | python3 -c "import sys,json; print(json.load(sys.stdin).get('tag_name',''))")
             TAG="${TAG:-v0.0.0}"
           fi
           SHORT_VERSION=$(echo "${TAG#v}" | awk -F. '{printf "%s.%s.%s", $1, ($2==""?"0":$2), ($3==""?"0":$3)}')

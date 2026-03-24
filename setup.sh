@@ -42,6 +42,18 @@ exit_error() {
     exit 1
 }
 
+check_dependencies() {
+    local missing=()
+    for cmd in curl python3; do
+        command -v "$cmd" &>/dev/null || missing+=("$cmd")
+    done
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        fail "Missing required dependencies: ${missing[*]}"
+        info "Install them and re-run this script."
+        exit 1
+    fi
+}
+
 show_header() {
     clear
     echo ""
@@ -500,6 +512,8 @@ if [[ "$EUID" -ne 0 ]]; then
     echo -e "${red}  This script must be run as root (sudo).${reset}"
     exit 1
 fi
+
+check_dependencies
 
 show_header "Setup"
 
