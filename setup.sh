@@ -165,8 +165,13 @@ connect_jellyfin() {
         read -rs _password
         echo ""
 
+        # Pass credentials via stdin to avoid exposure in process listings (ps/proc)
         local body
-        body=$(python3 -c "import json,sys; print(json.dumps({'Username':sys.argv[1],'Pw':sys.argv[2]}))" "$_username" "$_password")
+        body=$(printf '%s\n%s' "$_username" "$_password" | python3 -c "
+import json, sys
+u, p = sys.stdin.read().splitlines()
+print(json.dumps({'Username': u, 'Pw': p}))
+")
 
         _response=$(curl -fsSL \
             -X POST "${server_url}/Users/AuthenticateByName" \
