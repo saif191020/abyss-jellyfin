@@ -1116,9 +1116,9 @@ pre .str {
 }
 
 .install-manual-desc {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--accent-dim);
-  margin-bottom: 16px;
+  margin-bottom: 72px;
   line-height: 1.6;
   max-width: 680px;
 }
