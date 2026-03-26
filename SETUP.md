@@ -61,9 +61,7 @@ sudo ./abyss-setup-vX.X.X.sh
 
 <!-- Manual -->
 <details>
-<summary><h2>Manual Setup</h2></summary>
-
-If you prefer not to use the installers, follow these steps to manually install Abyss with the Spotlight feature.
+<summary><h2>Manual Setup</h2><br>If you prefer not to use the installers, follow these steps to manually install Abyss with the Spotlight feature.</summary>
 
 ## 1. Apply Abyss CSS
 
@@ -174,5 +172,33 @@ for the best visual experience.
 You can tweak colors, radius, and more here:
 [https://aumgupta.github.io/abyss-jellyfin/](https://aumgupta.github.io/abyss-jellyfin/)
 
+
+</details>
+
+
+<details>
+<summary><h2>Plugin Support</h2><br>If you use additional plugins, like <em>Jellyfin Enhanced</em>, <em>Media Bar Enhanced</em>, etc, then you can import it's <code>abyss-*css</code> override file.</summary>
+
+Just copy the plugin specific import from the list and paste below the `@import` line of `abyss.css` in a series:
+
+```css
+@import url('https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css');
+
+[PASTE PLUGIN SPECIFIC @IMPORT HERE]
+```
+
+> NOTE:
+> These are version specific overrides and need maintenance. It's assured that `abyss-*css` overrides will be updated as plugins evolve, but newer versions of plugins might lead to delayed updates to these override files.
+
+### 1. Jellyfin Enhanced `v11.3.0.0`
+
+```css
+@import url('https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/styles/abyss-je.css');
+```
+
+### 2. Media Bar Enhanced `v1.9.0.0`
+```css
+@import url('https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/styles/abyss-mbe.css');
+```
 
 </details>

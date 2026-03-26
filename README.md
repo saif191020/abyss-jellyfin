@@ -140,6 +140,10 @@ For detailed steps go to the [Setup Guide](SETUP.md).
 
 The steps to apply Abyss etirely manually can be found the detailed [SETUP](SETUP.md) guide.
 
+### Plugin Support
+
+If you use additional plugins, like *Jellyfin Enhanced*, *Media Bar Enhanced*, etc, then you can follow the [Plugin Support](SETUP.md) steps in the SETUP.md guide.
+
 <details>
 
 <summary><h2>Customisation</h2></summary>
