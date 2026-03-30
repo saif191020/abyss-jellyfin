@@ -89,7 +89,7 @@ A clean and minimal theme for Jellyfin with frosted glass surfaces, refined typo
 
 ## Installation
 
-### Linux
+### Linux & MacOS
 
 Download the latest **`abyss-setup-vX.X.X.sh`** from the [Releases](https://github.com/AumGupta/abyss-jellyfin/releases/latest) page and run it:
 

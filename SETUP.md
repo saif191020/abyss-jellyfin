@@ -45,7 +45,7 @@ Download the latest `abyss-setup-vX.X.X.exe` from the [Releases](https://github.
 
 <!-- Linus -->
 <details>
-<summary><h2>Linux</h2></summary>
+<summary><h2>Linux & MacOS</h2></summary>
 
 Download the latest **`abyss-setup-vX.X.X.sh`** from the [Releases](https://github.com/AumGupta/abyss-jellyfin/releases/latest) page and run it:
 
@@ -60,8 +60,53 @@ sudo ./abyss-setup-vX.X.X.sh
 </details>
 
 <!-- Docker -->
+
 <details>
 <summary><h2>Docker</h2></summary>
+
+> as Docker containers are ephemeral, modifications made inside them are usually destroyed when you update your container's image. below are **two methods** depending on which image you use:
+
+
+<details>
+<summary><h3>Method 1: Automated Init Script (recommended for <code>linuxserver/jellyfin</code>)</h3></summary>
+
+The `linuxserver/jellyfin` image supports custom initialization scripts. This method automatically downloads and re-applies the Abyss spotlight theme every time your container starts or updates, making it completely persistent. 
+
+**1. Download the Init Script**
+Download the [`abyss-spotlight.sh`](https://raw.githubusercontent.com/AumGupta/abyss-jellyfin/main/scripts/docker/abyss-spotlight.sh) script and place it in your Jellyfin config directory under a new folder named `custom-cont-init.d`. Make sure it is executable.
+
+```bash
+mkdir -p ./jellyfin/config/custom-cont-init.d
+curl -o ./jellyfin/config/custom-cont-init.d/abyss-spotlight.sh
+chmod +x ./jellyfin/config/custom-cont-init.d/abyss-spotlight.sh
+````
+
+**2. Mount the Volume in Docker Compose**
+You must explicitly mount the init script directory in your `docker-compose.yml` for the container to detect it:
+
+```yaml
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    volumes:
+      - /path/to/your/jellyfin/config:/config
+      - /path/to/your/jellyfin/config/custom-cont-init.d:/custom-cont-init.d # <-- Add this line
+      # ... your other media mounts ...
+```
+
+**3. Apply the CSS & Restart**
+
+  * Go to your Jellyfin **Dashboard \> General \> Custom CSS** and add the import URL:
+```
+@import url('https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css');
+```
+  * Restart your container (`docker compose up -d`). You can check the container logs to verify the script ran successfully.
+
+</details>
+
+
+<details>
+<summary><h3>Method 2: Interactive setup (For <code>jellyfin/jellyfin</code> and others)</h3></summary>
 
 > ## NOTE
 > This will work for all jellyfin docker images including:
@@ -91,8 +136,10 @@ chmod +x abyss-setup-vX.X.X.sh
 
 > ## NOTE
 > Requires `curl` and `python3`, which are available by default on most Linux distributions.
+</details>
 
 </details>
+
 
 <!-- Manual -->
 <details>
