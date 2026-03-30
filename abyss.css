@@ -223,7 +223,7 @@ input[type="radio"]:checked {
     display: none !important;
 }
 
-body:has(#tvRecommendedPage, #moviesPage, #musicRecommendedPage) .pageTitle{
+body:has(#tvRecommendedPage, #moviesPage, #musicRecommendedPage, #itemDetailPage) .pageTitle {
     display: none !important;
 }
 
@@ -358,6 +358,10 @@ body:has(#tvRecommendedPage, #moviesPage, #musicRecommendedPage) .pageTitle{
 
 /* Main content */
 .withSectionTabs .backdropImage {
+    filter: blur(23px) saturate(120%) contrast(120%) brightness(25%);
+}
+
+body:has(#itemDetailPage) .backdropImage {
     filter: blur(23px) saturate(120%) contrast(120%) brightness(25%);
 }
 
@@ -1958,6 +1962,7 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
 
 /* Backdrop filter support */
 @supports (backdrop-filter: blur(15px)) {
+
     .manualLoginForm,
     .dialog,
     .iconOsd,
@@ -1974,7 +1979,7 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
         backdrop-filter: blur(15px) !important;
         background-color: rgba(var(--abyss-glass-tint), 0.69) !important;
     }
-    
+
     .raised.cancel.block.btnForgotPassword.emby-button,
     .btnQuick,
     .pageTitle,
