@@ -70,6 +70,14 @@
     -webkit-text-fill-color: transparent !important;
 }
 
+#jellyseerr-search-icon {
+    top: 50%;
+}
+
+#je-bookmarks-standalone-page {
+    margin-top: 16vh;
+}
+
 .genre-overlay-container *,
 .rating-overlay-container *,
 .quality-overlay-container *,
