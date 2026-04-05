@@ -223,8 +223,16 @@ input[type="radio"]:checked {
     display: none !important;
 }
 
-body:has(#tvRecommendedPage, #moviesPage, #musicRecommendedPage, #itemDetailPage) .pageTitle {
+
+#tvRecommendedPage .pageTitle, 
+#moviesPage .pageTitle, 
+#musicRecommendedPage .pageTitle, 
+#itemDetailPage .pageTitle {
     display: none !important;
+}
+
+#videoOsdPage .pageTitle {
+    display: flex !important;
 }
 
 .sectionTitle {
