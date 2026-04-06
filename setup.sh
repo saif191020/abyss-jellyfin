@@ -141,29 +141,12 @@ download_file() {
 
 sync_spotlight_files() {
     local abyss_dir="$1"
-    step "Checking spotlight files..."
+    step "Downloading latest spotlight files..."
     echo ""
-
-    local all_present=true
     for file in "${SPOTLIGHT_FILES[@]}"; do
         local dest="${abyss_dir}/$(basename "$file")"
-        [[ ! -f "$dest" ]] && all_present=false
+        download_file "$file" "$dest"
     done
-
-    if $all_present; then
-        ok "All spotlight files already present."
-    else
-        step "Downloading spotlight files..."
-        echo ""
-        for file in "${SPOTLIGHT_FILES[@]}"; do
-            local dest="${abyss_dir}/$(basename "$file")"
-            if [[ ! -f "$dest" ]]; then
-                download_file "$file" "$dest"
-            else
-                skip "Already exists: $(basename "$file")"
-            fi
-        done
-    fi
     echo ""
 }
 
@@ -352,8 +335,17 @@ print(json.dumps(d))
         -H "X-Emby-Authorization: ${api_header}" 2>/dev/null) || true
 
     if [[ -n "$display_prefs" ]]; then
+        # Ask before reordering home sections
+        echo ""
+        echo -e "${yellow}  Reorder home screen sections?${reset}"
+        info "Recommended order: Continue Watching, Next Up, My Media, Recently Added."
+        info "(Recommended for best experience with Abyss)"
+        read -rp "  Reorder sections? [Y/n]: " reorder_choice
+        echo ""
+
         local updated_prefs
-        updated_prefs=$(echo "$display_prefs" | python3 -c "
+        if [[ "${reorder_choice^^}" == "Y" ]]; then
+            updated_prefs=$(echo "$display_prefs" | python3 -c "
 import sys, json
 d = json.load(sys.stdin)
 p = d.setdefault('CustomPrefs', {})
@@ -366,13 +358,23 @@ for i in range(4, 10):
     p[f'homesection{i}'] = 'none'
 print(json.dumps(d))
 ")
+        else
+            updated_prefs=$(echo "$display_prefs" | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+p = d.setdefault('CustomPrefs', {})
+p['dashboardTheme'] = 'dark'
+print(json.dumps(d))
+")
+        fi
 
         curl -fsSL \
             -X POST "${server_url}/DisplayPreferences/usersettings?userId=${user_id}&client=emby" \
             -H "Content-Type: application/json" \
             -H "X-Emby-Authorization: ${api_header}" \
             -d "$updated_prefs" >/dev/null 2>&1 \
-            && ok "Dashboard theme set to Dark." && ok "Home screen sections configured." \
+            && ok "Dashboard theme set to Dark." \
+            && { [[ "${reorder_choice^^}" == "Y" ]] && ok "Home screen sections configured." || skip "Home screen sections left unchanged."; } \
             || warn "Could not configure theme settings. Set manually in Settings > Display."
     else
         warn "Could not fetch display preferences."

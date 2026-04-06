@@ -76,7 +76,7 @@ function Get-JellyfinWebDir {
     return $path
 }
 
-# Download files 
+# Download files — always re-downloads to pick up latest versions
 
 function Get-AbyssFile {
     param($repoPath, $destPath)
@@ -93,28 +93,11 @@ function Get-AbyssFile {
 
 function Sync-SpotlightFiles {
     param($abyssDir)
-    Write-Step "Checking spotlight files..."
+    Write-Step "Downloading latest spotlight files..."
     Write-Host ""
-
-    $allPresent = $true
     foreach ($file in $SPOTLIGHT_FILES) {
         $destPath = Join-Path $abyssDir (Split-Path $file -Leaf)
-        if (-not (Test-Path $destPath)) { $allPresent = $false }
-    }
-
-    if ($allPresent) {
-        Write-Ok "All spotlight files already present."
-    } else {
-        Write-Step "Downloading spotlight files..."
-        Write-Host ""
-        foreach ($file in $SPOTLIGHT_FILES) {
-            $destPath = Join-Path $abyssDir (Split-Path $file -Leaf)
-            if (-not (Test-Path $destPath)) {
-                Get-AbyssFile $file $destPath
-            } else {
-                Write-Skip "Already exists: $(Split-Path $file -Leaf)"
-            }
-        }
+        Get-AbyssFile $file $destPath
     }
     Write-Host ""
 }
@@ -212,7 +195,7 @@ function Install-Abyss {
     }
     Write-Host ""
 
-    # Download spotlight files
+    # Download spotlight files (always fresh)
     Sync-SpotlightFiles $abyssDir
 
     # Apply Abyss CSS
@@ -229,24 +212,36 @@ function Install-Abyss {
     }
     Write-Host ""
 
-    # Configure theme and home sections
+    # Configure theme settings
     Write-Step "Configuring theme settings..."
     try {
         $displayPrefs = Invoke-RestMethod -Uri "$serverUrl/DisplayPreferences/usersettings?userId=$userId&client=emby" -Method Get -Headers $apiHeaders
         $displayPrefs.CustomPrefs.dashboardTheme = "dark"
-        $displayPrefs.CustomPrefs.homesection0   = "resume"
-        $displayPrefs.CustomPrefs.homesection1   = "nextup"
-        $displayPrefs.CustomPrefs.homesection2   = "smalllibrarytiles"
-        $displayPrefs.CustomPrefs.homesection3   = "latestmedia"
-        $displayPrefs.CustomPrefs.homesection4   = "none"
-        $displayPrefs.CustomPrefs.homesection5   = "none"
-        $displayPrefs.CustomPrefs.homesection6   = "none"
-        $displayPrefs.CustomPrefs.homesection7   = "none"
-        $displayPrefs.CustomPrefs.homesection8   = "none"
-        $displayPrefs.CustomPrefs.homesection9   = "none"
-        Invoke-RestMethod -Uri "$serverUrl/DisplayPreferences/usersettings?userId=$userId&client=emby" -Method Post -Headers $apiHeaders -Body ($displayPrefs | ConvertTo-Json -Depth 10) | Out-Null
         Write-Ok "Dashboard theme set to Dark."
-        Write-Ok "Home screen sections configured."
+
+        # Ask before reordering home sections
+        Write-Host ""
+        Write-Host " Reorder home screen sections?" -ForegroundColor Yellow
+        Write-Info "Recommended order: Continue Watching, Next Up, My Media, Recently Added."
+        Write-Info "(Recommended for best experience with Abyss)"
+        $reorderChoice = Read-Host "  Reorder sections? [Y/n]"
+        if ($reorderChoice.Trim().ToUpper() -eq "Y") {
+            $displayPrefs.CustomPrefs.homesection0 = "resume"
+            $displayPrefs.CustomPrefs.homesection1 = "nextup"
+            $displayPrefs.CustomPrefs.homesection2 = "smalllibrarytiles"
+            $displayPrefs.CustomPrefs.homesection3 = "latestmedia"
+            $displayPrefs.CustomPrefs.homesection4 = "none"
+            $displayPrefs.CustomPrefs.homesection5 = "none"
+            $displayPrefs.CustomPrefs.homesection6 = "none"
+            $displayPrefs.CustomPrefs.homesection7 = "none"
+            $displayPrefs.CustomPrefs.homesection8 = "none"
+            $displayPrefs.CustomPrefs.homesection9 = "none"
+            Write-Ok "Home screen sections configured."
+        } else {
+            Write-Skip "Home screen sections left unchanged."
+        }
+
+        Invoke-RestMethod -Uri "$serverUrl/DisplayPreferences/usersettings?userId=$userId&client=emby" -Method Post -Headers $apiHeaders -Body ($displayPrefs | ConvertTo-Json -Depth 10) | Out-Null
     } catch {
         Write-Warn "Could not configure theme settings automatically."
         Write-Info "Set manually: Settings > Display > Server Dashboard Theme > Dark"
@@ -449,7 +444,6 @@ function Uninstall-Abyss {
 
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (-not $isAdmin) {
-    # Re-launch current exe or ps1 elevated
     $exePath = [System.Diagnostics.Process]::GetCurrentProcess().MainModule.FileName
     if ($exePath -like "*.exe") {
         Start-Process -FilePath $exePath -Verb RunAs
