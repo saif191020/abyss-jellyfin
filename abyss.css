@@ -224,9 +224,9 @@ input[type="radio"]:checked {
 }
 
 
-#tvRecommendedPage .pageTitle, 
-#moviesPage .pageTitle, 
-#musicRecommendedPage .pageTitle, 
+#tvRecommendedPage .pageTitle,
+#moviesPage .pageTitle,
+#musicRecommendedPage .pageTitle,
 #itemDetailPage .pageTitle {
     display: none !important;
 }
@@ -1750,6 +1750,29 @@ div[data-role="controlgroup"] a[data-role="button"]:last-child {
     #guestCastContent .cardScalable {
         width: calc(31.2vw - 0.6em) !important;
         height: calc(31.2vw - 0.6em) !important;
+    }
+
+    .innerCardFooterClear {
+        padding-right: 24px !important;
+    }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 500px) {
+
+    #castContent .card.overflowPortraitCard,
+    #guestCastContent .card.overflowPortraitCard {
+        width: 31.2vw !important;
+        font-size: 90% !important;
+    }
+
+    #castContent .cardScalable,
+    #guestCastContent .cardScalable {
+        width: calc(31.2vw - 0.6em) !important;
+        height: calc(31.2vw - 0.6em) !important;
+    }
+
+    .innerCardFooterClear {
+        padding-right: 24px !important;
     }
 }
 

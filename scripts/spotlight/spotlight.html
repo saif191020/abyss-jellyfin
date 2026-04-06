@@ -30,7 +30,31 @@
 	<div id="clickzone"></div>
 	<div id="empty" style="display:none">Nothing to show</div>
 
+	<!-- Update notification -->
+	<div id="update-toast" style="display:none" role="status" aria-live="polite">
+		<div id="update-toast-inner">
+			<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="currentColor">
+				<path
+					d="M480-323.39 314.31-489.08l32.61-32.23 110.39 110V-780h45.38v368.69l110.39-110 32.61 32.23L480-323.39ZM237.69-180q-23.53 0-40.61-17.08T180-237.69V-363h45.39v125.31q0 4.61 3.84 8.46 3.85 3.84 8.46 3.84h484.62q4.61 0 8.46-3.84 3.84-3.85 3.84-8.46V-363H780v125.31q0 23.53-17.08 40.61T722.31-180H237.69Z" />
+			</svg>
+			<span id="update-text"></span>
+			<a id="update-link" href="#" target="_blank" rel="noopener noreferrer" id="update-link">View release</a>
+			<button id="update-dismiss" aria-label="Dismiss notification">
+				<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"
+					fill="currentColor">
+					<path
+						d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
 	<script>
+		// Version
+		// Updated automatically by the installer on each install/update.
+		// Format: matches GitHub release tag without the leading 'v', e.g. "1.1.0"
+		const ABYSS_SPOTLIGHT_VERSION = '1.1.0';
+
 		(async () => {
 			const $ = id => document.getElementById(id);
 
@@ -85,6 +109,58 @@
 					if (!res.ok) return null;
 					return URL.createObjectURL(await res.blob());
 				} catch { return null; }
+			}
+
+			// Version check
+			// Runs in background, shows toast only if a newer release exists.
+			// Respects a sessionStorage dismiss so it doesn't re-appear on SPA nav.
+
+			function semverGt(a, b) {
+				// Returns true if a > b, where a and b are "x.y.z" strings
+				const pa = a.split('.').map(Number);
+				const pb = b.split('.').map(Number);
+				for (let i = 0; i < 3; i++) {
+					if ((pa[i] || 0) > (pb[i] || 0)) return true;
+					if ((pa[i] || 0) < (pb[i] || 0)) return false;
+				}
+				return false;
+			}
+
+			async function checkForUpdate() {
+				const dismissKey = 'abyss-update-dismissed';
+				if (sessionStorage.getItem(dismissKey)) return;
+
+				try {
+					const res = await fetch(
+						'https://api.github.com/repos/AumGupta/abyss-jellyfin/releases/latest',
+						{ cache: 'no-store' }
+					);
+					if (!res.ok) return;
+					const data = await res.json();
+					const latest = (data.tag_name || '').replace(/^v/, '');
+					if (!latest || !semverGt(latest, ABYSS_SPOTLIGHT_VERSION)) return;
+
+					// Show toast
+					const toast = $('update-toast');
+					const textEl = $('update-text');
+					const linkEl = $('update-link');
+					const dismissEl = $('update-dismiss');
+
+					textEl.textContent = `Abyss v${latest} available, download and re-run the installer to update.`;
+					linkEl.href = data.html_url || `https://github.com/AumGupta/abyss-jellyfin/releases/tag/v${latest}`;
+
+					toast.style.display = 'flex';
+					// Trigger CSS transition
+					requestAnimationFrame(() => toast.classList.add('visible'));
+
+					dismissEl.addEventListener('click', () => {
+						toast.classList.remove('visible');
+						setTimeout(() => { toast.style.display = 'none'; }, 400);
+						sessionStorage.setItem(dismissKey, '1');
+					});
+				} catch {
+					// Silently ignore - network may be unavailable
+				}
 			}
 
 			const base = getBaseUrl();
@@ -188,8 +264,8 @@
 			async function renderItem(index) {
 				const item = items[index];
 				if (!item) return;
-				
-				
+
+
 				$('content').style.transform = 'translateY(10px)';
 				$('content').style.opacity = '0';
 				$('backdrop').style.opacity = '0';
@@ -197,7 +273,7 @@
 				$('content').classList.remove('visible');
 				updateDots();
 				await new Promise(r => setTimeout(r, 400));
-				
+
 
 				const isEp = item.Type === 'Episode';
 				const logoId = isEp ? (item.SeriesId || item.Id) : item.Id;
@@ -335,6 +411,10 @@
 				$('backdrop').classList.add('loaded');
 				$('content').classList.add('visible');
 			}
+
+			// Boot
+			// Version check runs in background - never blocks the main render
+			checkForUpdate();
 
 			items = await fetchItems();
 			if (!items.length) { $('empty').style.display = 'flex'; return; }

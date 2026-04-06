@@ -19,16 +19,16 @@
       .featurediframe { height: 68vh; max-height: 860px; }
     }
     @media (max-width: 1024px) and (orientation: portrait) {
-      .featurediframe { height: 58vh; min-height: 320px; max-height: 520px; }
+      .featurediframe { height: 90vh; min-height: 320px; max-height: 720px; }
     }
     @media (max-width: 1024px) and (orientation: landscape) {
-      .featurediframe { height: 52vh; min-height: 280px; max-height: 420px; }
+      .featurediframe { height: 100vh; min-height: 280px; max-height: 420px; }
     }
     @media (max-width: 600px) and (orientation: portrait) {
-      .featurediframe { height: 72vh; min-height: 260px;}
+      .featurediframe { height: 90vh; min-height: 260px; max-height: 720px; }
     }
     @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
-      .featurediframe { height: 52vh; min-height: 200px;}
+      .featurediframe { height: 100vh; min-height: 200px;}
     }
   </style>
 
