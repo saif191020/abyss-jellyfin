@@ -2,10 +2,10 @@
 
 # [Abyss](https://aumgupta.github.io/abyss-jellyfin/) for Jellyfin
 
-<!-- ![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge) -->
-![jsDelivr Requests](https://img.shields.io/jsdelivr/gh/hm/AumGupta/abyss-jellyfin?style=for-the-badge&label=Usage&logo=none)
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/AumGupta/abyss-jellyfin/total?style=for-the-badge)](https://github.com/AumGupta/abyss-jellyfin/releases/latest)
+![GitHub License](https://img.shields.io/github/license/AumGupta/abyss-jellyfin?style=for-the-badge)
 ![GitHub Release](https://img.shields.io/github/v/release/AumGupta/abyss-jellyfin?style=for-the-badge)
+![jsDelivr Requests](https://img.shields.io/jsdelivr/gh/hm/AumGupta/abyss-jellyfin?style=for-the-badge&label=Usage&logo=none)
+<!-- [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/AumGupta/abyss-jellyfin/total?style=for-the-badge)](https://github.com/AumGupta/abyss-jellyfin/releases/latest) -->
 
 <img alt="Abyss Logo" src="docs/assets/favicon/apple-touch-icon.png" style="width: 72px;">
 
